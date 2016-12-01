@@ -35,26 +35,26 @@ def nos_tree(S, s):
         premises = (t1, t2)
         post_state = spp
 
-    elif type(S) is If and eval_bool_expr(S.b, s) is True:
+    elif type(S) is If and eval_bool_expr(S.b, s) is tt:
         rule = 'if_tt'
         sp, t = nos_tree(S.S1, s)
         premises = (t, )
         post_state = sp
 
-    elif type(S) is If and eval_bool_expr(S.b, s) is False:
+    elif type(S) is If and eval_bool_expr(S.b, s) is ff:
         rule = 'if_ff'
         sp, t = nos_tree(S.S2, s)
         premises = (t, )
         post_state = sp
 
-    elif type(S) is While and eval_bool_expr(S.b, s) is True:
+    elif type(S) is While and eval_bool_expr(S.b, s) is tt:
         rule = 'while_tt'
         sp, t1 = nos_tree(S.S, s)
         spp, t2 = nos_tree(While(S.b, S.S), sp)
         premises = (t1, t2)
         post_state = spp
 
-    elif type(S) is While and eval_bool_expr(S.b, s) is False:
+    elif type(S) is While and eval_bool_expr(S.b, s) is ff:
         rule = 'while_ff'
         premises = ()
         post_state = s
@@ -83,3 +83,20 @@ if __name__ == '__main__':
     #
     # --- ADD MORE TESTS HERE ---
     #
+
+    prog1_d = Comp(Assign('a', ALit(84)),
+                Comp(Assign('b', ALit(22)),
+                    Comp(Assign('c',ALit(0)),
+                         While(Not(Eq(Var('b'), ALit(0))),# while condition
+                            Comp(If(Not(Eq(BitWiseAnd(Var('b'),ALit(1)), ALit(0))), Assign('c',Plus(Var('c'),Var('a'))),Skip()), # s1 = if then else
+                                 Comp(Assign('a',BitWiseSL(Var('a'),ALit(1))),Assign('b',BitWiseSR(Var('b'),ALit(1)))) # S2 : a=a<<1; b=a>>1
+                               )# end while Comp
+                               ) # end while
+                                )))#end 3 Comp
+
+    s, tree = nos_tree(prog1_d, {})
+    print s
+    print
+    print tree
+    print
+    view_tree(tree)

@@ -39,6 +39,15 @@ def eval_arith_expr(e, s):
     elif type(e) is Minus:
         return eval_arith_expr(e.a1, s) - eval_arith_expr(e.a2, s)
 
+    elif type(e) is BitWiseAnd:
+        return eval_arith_expr(e.a1, s) & eval_arith_expr(e.a2, s)
+
+    elif type(e) is BitWiseSL:
+        return eval_arith_expr(e.a1, s) << eval_arith_expr(e.a2, s)
+
+    elif type(e) is BitWiseSR:
+        return eval_arith_expr(e.a1, s) >> eval_arith_expr(e.a2, s)
+
     else:
         assert False # Error
 
@@ -57,19 +66,34 @@ def eval_bool_expr(e, s):
         return e.value
 
     elif type(e) is Eq:
-        return eval_arith_expr(e.a1, s) == eval_arith_expr(e.a2, s)
+        if(eval_arith_expr(e.a1, s) == eval_arith_expr(e.a2, s)):
+            return tt
+        else:
+            return ff
 
     elif type(e) is LE:
-        return eval_arith_expr(e.a1, s) <= eval_arith_expr(e.a2, s)
+        if (eval_arith_expr(e.a1, s) <= eval_arith_expr(e.a2, s)):
+            return tt
+        else:
+            return ff
 
     elif type(e) is Not:
-        return not eval_bool_expr(e.b, s)
+        if (eval_bool_expr(e.b, s)):
+            return ff
+        else:
+            return tt
 
     elif type(e) is And:
-        return eval_bool_expr(e.b1, s) and eval_bool_expr(e.b2, s)
+        if (eval_bool_expr(e.b1, s) and eval_bool_expr(e.b2, s)):
+            return tt
+        else:
+            return ff
 
     elif type(e) is Or:
-        return eval_bool_expr(e.b1, s) or eval_bool_expr(e.b2, s)
+        if (eval_bool_expr(e.b1, s) or eval_bool_expr(e.b2, s)):
+            return tt
+        else:
+            return ff
 
     else:
         assert False # Error

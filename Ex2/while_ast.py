@@ -114,6 +114,28 @@ class Minus(ArithExpr):
 # --- ADD HERE IN QUESTION 1 ---
 #
 
+class BitWiseAnd(ArithExpr):
+    def __init__(self,a1,a2):
+        self.a1 = a1
+        self.a2 = a2
+    def __repr__(self):
+        return 'BitWiseAnd({}, {})'.format(self.a1, self.a2)
+
+class BitWiseSL(ArithExpr):
+    def __init__(self, a1, a2):
+        self.a1 = a1
+        self.a2 = a2
+    def __repr__(self):
+        return 'BitWiseShiftLeft({}, {})'.format(self.a1, self.a2)
+
+class BitWiseSR(ArithExpr):
+    def __init__(self, a1, a2):
+        self.a1 = a1
+        self.a2 = a2
+    def __repr__(self):
+        return 'BitWiseShiftRight({}, {})'.format(self.a1, self.a2)
+
+
 
 # Boolean Expressions
 
