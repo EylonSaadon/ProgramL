@@ -84,17 +84,19 @@ if __name__ == '__main__':
     # --- ADD MORE TESTS HERE ---
     #
 
-    prog1_d = Comp(Assign('a', ALit(84)),
+    prog1d = Comp(Assign('a', ALit(84)),
                 Comp(Assign('b', ALit(22)),
                     Comp(Assign('c',ALit(0)),
-                         While(Not(Eq(Var('b'), ALit(0))),# while condition
-                            Comp(If(Not(Eq(BitWiseAnd(Var('b'),ALit(1)), ALit(0))), Assign('c',Plus(Var('c'),Var('a'))),Skip()), # s1 = if then else
-                                 Comp(Assign('a',BitWiseSL(Var('a'),ALit(1))),Assign('b',BitWiseSR(Var('b'),ALit(1)))) # S2 : a=a<<1; b=a>>1
-                               )# end while Comp
-                               ) # end while
-                                )))#end 3 Comp
+                         While(Not(Eq(Var('b'), ALit(0))),
+                            Comp(If(Not(Eq(BitAnd(Var('b'), ALit(1)), ALit(0))), Assign('c', Plus(Var('c'), Var('a'))), Skip()),
+                                 Comp(Assign('a', BitShiftLeft(Var('a'), ALit(1))), Assign('b', BitShiftRight(Var('b'), ALit(1))))
+                                 )
+                            )
+                        )
+                    )
+                )
 
-    s, tree = nos_tree(prog1_d, {})
+    s, tree = nos_tree(prog1d, {})
     print s
     print
     print tree

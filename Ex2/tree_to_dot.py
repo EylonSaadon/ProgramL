@@ -42,8 +42,8 @@ def tree_to_dot(tree):
 
 def view(x):
     try:
-        import graphviz
-        d = graphviz.Digraph(body=x.splitlines()[1:-1])
+        import graphviz2
+        d = graphviz2.Digraph(body=x.splitlines()[1:-1])
         d.render(view=True)
     except ImportError:
         print "Graphviz not available, the tree in dot format is (you can render online at http://www.webgraphviz.com):\n"

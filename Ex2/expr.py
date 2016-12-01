@@ -39,13 +39,13 @@ def eval_arith_expr(e, s):
     elif type(e) is Minus:
         return eval_arith_expr(e.a1, s) - eval_arith_expr(e.a2, s)
 
-    elif type(e) is BitWiseAnd:
+    elif type(e) is BitAnd:
         return eval_arith_expr(e.a1, s) & eval_arith_expr(e.a2, s)
 
-    elif type(e) is BitWiseSL:
+    elif type(e) is BitShiftLeft:
         return eval_arith_expr(e.a1, s) << eval_arith_expr(e.a2, s)
 
-    elif type(e) is BitWiseSR:
+    elif type(e) is BitShiftRight:
         return eval_arith_expr(e.a1, s) >> eval_arith_expr(e.a2, s)
 
     else:
@@ -78,19 +78,19 @@ def eval_bool_expr(e, s):
             return ff
 
     elif type(e) is Not:
-        if (eval_bool_expr(e.b, s)):
+        if (eval_bool_expr(e.b, s) == tt):
             return ff
         else:
             return tt
 
     elif type(e) is And:
-        if (eval_bool_expr(e.b1, s) and eval_bool_expr(e.b2, s)):
+        if (eval_bool_expr(e.b1, s) == tt and eval_bool_expr(e.b2, s) == tt):
             return tt
         else:
             return ff
 
     elif type(e) is Or:
-        if (eval_bool_expr(e.b1, s) or eval_bool_expr(e.b2, s)):
+        if (eval_bool_expr(e.b1, s) == tt or eval_bool_expr(e.b2, s) == tt):
             return tt
         else:
             return ff
